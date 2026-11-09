@@ -2,7 +2,6 @@ import { useState } from 'react';
 import NoteCard from './NoteCard.jsx';
 
 function Notes() {
-  
   const [notes, setNotes] = useState([
     { 
       id: 1, 
@@ -16,13 +15,11 @@ function Notes() {
     }
   ]);
 
-  
   const [formData, setFormData] = useState({
     title: '',
     body: ''
   });
 
-  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -31,26 +28,27 @@ function Notes() {
     }));
   };
 
-  
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    
     const trimmedTitle = formData.title.trim();
     const trimmedBody = formData.body.trim();
 
-    
     if (!trimmedTitle || !trimmedBody) return;
 
-    
     const newNote = {
-      id: Date.now(), 
+      id: Date.now(),
       title: trimmedTitle,
       body: trimmedBody
     };
 
     setNotes((prevNotes) => [...prevNotes, newNote]);
     setFormData({ title: '', body: '' });
+  };
+
+  // 1. Delete handler that filters out the note matching idToTarget
+  const handleDeleteNote = (idToTarget) => {
+    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== idToTarget));
   };
 
   return (
@@ -68,7 +66,6 @@ function Notes() {
           />
         </div>
 
-        {/* Attached onSubmit handler */}
         <form onSubmit={handleSubmit} className="grid gap-3">
           <p className="text-[13px] font-normal tracking-wide text-[#949494]">NEW NOTE</p>
           <input
@@ -104,8 +101,10 @@ function Notes() {
                 title={note.title}
                 body={note.body}
               />
+              {/* 2. Attach onClick with an arrow function passing note.id */}
               <button
                 type="button"
+                onClick={() => handleDeleteNote(note.id)}
                 className="absolute top-4 right-5 cursor-pointer text-[26px] leading-none text-[#949494] hover:text-[#c18585]"
               >
                 ×
