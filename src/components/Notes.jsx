@@ -46,7 +46,6 @@ function Notes() {
     setFormData({ title: '', body: '' });
   };
 
-  // 1. Delete handler that filters out the note matching idToTarget
   const handleDeleteNote = (idToTarget) => {
     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== idToTarget));
   };
@@ -101,7 +100,6 @@ function Notes() {
                 title={note.title}
                 body={note.body}
               />
-              {/* 2. Attach onClick with an arrow function passing note.id */}
               <button
                 type="button"
                 onClick={() => handleDeleteNote(note.id)}
@@ -112,6 +110,11 @@ function Notes() {
             </li>
           ))}
         </ul>
+
+        {/* Conditional empty message placed directly after the </ul> tag */}
+        {notes.length === 0 && (
+          <p className="text-lg text-[#949494]">No notes found</p>
+        )}
       </section>
     </div>
   );
