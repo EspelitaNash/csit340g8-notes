@@ -5,7 +5,6 @@ function NoteCard({ id, title, body , onDelete }) {
  
   const [isExpanded, setIsExpanded] = useState(false);
   const { largeText } = useContext(SettingsContext)
-  console.log('render', title)
 
 
 
