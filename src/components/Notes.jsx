@@ -29,6 +29,9 @@ function Notes() {
   const [searchQuery, setSearchQuery] = useState("");
   const titleRef = useRef(null)
 
+  useEffect(() => {
+  localStorage.setItem('notes', JSON.stringify(notes));
+}, [notes]);
 
   useEffect(() => {
     const id = setTimeout(() => {
