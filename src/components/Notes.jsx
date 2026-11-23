@@ -29,8 +29,12 @@ function Notes() {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-  localStorage.setItem('notes', JSON.stringify(notes));
-}, [notes]);
+    const id = setTimeout(() => {
+      localStorage.setItem('draft', JSON.stringify(formData))
+      console.log('draft saved:', formData.title)
+    }, 1000)
+    return () => clearTimeout(id)
+  }, [formData])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
