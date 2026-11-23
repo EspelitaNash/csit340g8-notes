@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef , useMemo} from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import NoteCard from "./NoteCard.jsx";
 
 const startingNotes = [
@@ -68,9 +68,9 @@ function Notes() {
     titleRef.current.focus()
   };
 
-  const handleDeleteNote = (idToTarget) => {
-    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== idToTarget));
-  };
+  const handleDeleteNote = useCallback((id) => {
+     setNotes(notes.filter((note) => note.id !== id))
+  }, [notes]);
 
   const filteredNotes = useMemo(() => {
     console.log('filtering')
@@ -137,14 +137,12 @@ function Notes() {
               key={note.id}
               className="relative min-h-32 bg-white px-6 py-5 shadow-[0_2px_4px_0_rgba(0,0,0,0.2),0_25px_50px_0_rgba(0,0,0,0.1)]"
             >
-              <NoteCard title={note.title} body={note.body} />
-              <button
-                type="button"
-                onClick={() => handleDeleteNote(note.id)}
-                className="absolute top-4 right-5 cursor-pointer text-[26px] leading-none text-[#949494] hover:text-[#c18585]"
-              >
-                ×
-              </button>
+              <NoteCard
+                id={note.id}
+                title={note.title}
+                body={note.body}
+                onDelete={handleDeleteNote}
+              />
             </li>
           ))}
         </ul>
